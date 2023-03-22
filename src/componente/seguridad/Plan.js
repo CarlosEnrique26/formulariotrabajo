@@ -50,9 +50,9 @@ const Plan = () => {
             [name] : value
         }))
         console.log(value);
-        const minValue=value.length>6;
-        const maxValue=value.length<10;
-        const onliLet=/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{6,10})$/.test(value);
+        const minValue=value.length>4;
+        const maxValue=value.length<16;
+        const onliLet=/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/.test(value);
 
         console.log("min",minValue);
         console.log("maxValue",maxValue);
@@ -81,7 +81,7 @@ const Plan = () => {
         console.log(value);
         const minValue=value.length>2;
         const maxValue=value.length<20;
-        const onliLet=/^[0-9]+([.])?([0-9]+){2,20}$/.test(value);
+        const onliLet=/[0-9,]+[^.]/.test(value);
 
         console.log("min",minValue);
         console.log("maxValue",maxValue);
@@ -186,6 +186,8 @@ const Plan = () => {
                             <Grid item xs={12} md={4}>
                                 <TextField 
                                         id="Duracion"
+                                        type="text"
+                                        label="Ingrese duracion"
                                         requared
                                         name="Duracion"
                                         error={ErrorDuracion} 
@@ -193,12 +195,11 @@ const Plan = () => {
                                         onChange={ValidateDuracion} 
                                         variant="outlined" 
                                         fullWidth 
-                                        type="date"
                                         />
                                         {
                                         (ErrorDuracion===1) && (
                                             <label>
-                                                La duracion no puede incluir letras.
+                                                El formato de duracion no es valido
                                             </label>
                                         )
                                     }
@@ -229,6 +230,7 @@ const Plan = () => {
                                 <TextField 
                                         name="Precio"
                                         id="Precio"
+                                        type="text"
                                         requared 
                                         error={ErrorPrecio}
                                         value={usuario.Precio} 

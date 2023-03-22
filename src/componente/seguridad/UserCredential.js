@@ -4,21 +4,133 @@ import style from '../Tool/Style';
 
 
 const PlandeUsuario = () => {
-
     const [usuario, setUsuario] = useState({
         IdCredencial : '',
         PlanDeIdentificacion : '',
         Eliminar : '',
         FinDeFecha : ''
         });
+
+    const [ErrorIdCredencial, setErrorIdCredencial] = useState(0);
+    const [ErrorPlanDeIdentificacion, setErrorPlanDeIdentificacion] = useState(0);
+    const [ErrorEliminar, setErrorEliminar] = useState(0);
+    const [ErrorFinDeFecha, setErrorFinDeFecha] = useState(0);
     
-    const IngresarValoresMemoria = e => {
-        const{name, value} = e.target;
-        setUsuario( anterior => ({
-            ...anterior, 
-            [name] : value
-        }))
-    }
+        const ValidateIdCredencial = e => {
+            const{name, value} = e.target;
+            setUsuario( anterior => ({
+                ...anterior,
+                [name] : value
+            }))
+            console.log(value);
+            const minValue=value.length>4;
+            const maxValue=value.length<40;
+            const onliLet=/^[a-zA-ZÀ-ÿ\s]{4,40}$/.test(value);
+    
+            console.log("min",minValue);
+            console.log("maxValue",maxValue);
+            console.log("onliLet",onliLet);
+    
+            if (onliLet === false) {
+                setErrorIdCredencial(1);
+            } else if (!minValue) {
+                setErrorIdCredencial(2);
+            } else {
+                setErrorIdCredencial(3);
+            }
+    
+            if (onliLet === true && minValue && maxValue) {
+                setErrorIdCredencial(0);
+            }
+            setUsuario(value);
+        }
+
+        const ValidatePlanDeIdentificacion = e => {
+            const{name, value} = e.target;
+            setUsuario( anterior => ({
+                ...anterior,
+                [name] : value
+            }))
+            console.log(value);
+            const minValue=value.length>4;
+            const maxValue=value.length<40;
+            const onliLet=/^[a-zA-ZÀ-ÿ\s]{4,40}$/.test(value);
+    
+            console.log("min",minValue);
+            console.log("maxValue",maxValue);
+            console.log("onliLet",onliLet);
+    
+            if (onliLet === false) {
+                setErrorPlanDeIdentificacion(1);
+            } else if (!minValue) {
+                setErrorPlanDeIdentificacion(2);
+            } else {
+                setErrorPlanDeIdentificacion(3);
+            }
+    
+            if (onliLet === true && minValue && maxValue) {
+                setErrorPlanDeIdentificacion(0);
+            }
+            setUsuario(value);
+        }
+
+        const ValidateEliminar = e => {
+            const{name, value} = e.target;
+            setUsuario( anterior => ({
+                ...anterior,
+                [name] : value
+            }))
+            console.log(value);
+            const minValue=value.length>4;
+            const maxValue=value.length<40;
+            const onliLet=/^[a-zA-ZÀ-ÿ\s]{4,40}$/.test(value);
+    
+            console.log("min",minValue);
+            console.log("maxValue",maxValue);
+            console.log("onliLet",onliLet);
+    
+            if (onliLet === false) {
+                setErrorEliminar(1);
+            } else if (!minValue) {
+                setErrorEliminar(2);
+            } else {
+                setErrorEliminar(3);
+            }
+    
+            if (onliLet === true && minValue && maxValue) {
+                setErrorEliminar(0);
+            }
+            setUsuario(value);
+        }
+
+        const ValidateFinDeFecha = e => {
+            const{name, value} = e.target;
+            setUsuario( anterior => ({
+                ...anterior,
+                [name] : value
+            }))
+            console.log(value);
+            const minValue=value.length>4;
+            const maxValue=value.length<16;
+            const onliLet=/^([0-2][0-9]|3[0-1])(\/|-)(0[1-9]|1[0-2])\2(\d{4})$/.test(value);
+    
+            console.log("min",minValue);
+            console.log("maxValue",maxValue);
+            console.log("onliLet",onliLet);
+    
+            if (onliLet === false) {
+                setErrorFinDeFecha(1);
+            } else if (!minValue) {
+                setErrorFinDeFecha(2);
+            } else {
+                setErrorFinDeFecha(3);
+            }
+    
+            if (onliLet === true && minValue && maxValue) {
+                setErrorFinDeFecha(0);
+            }
+            setUsuario(value);
+        }
 
     const planusuario= e => {
         e.preventDefault();
@@ -58,7 +170,39 @@ const PlandeUsuario = () => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                                <TextField name="IdCredencial" value={usuario.Id} onChange={IngresarValoresMemoria} variant="outlined" fullWidth label="Ingrese Id credencial de usuario "/>
+                                <TextField 
+                                        id="IdCredencial"
+                                        name="IdCredencial" 
+                                        type="text"
+                                        error={ErrorIdCredencial}
+                                        value={usuario.IdCredencial} 
+                                        onChange={ValidateIdCredencial} 
+                                        variant="outlined" 
+                                        requared
+                                        fullWidth 
+                                        label="Ingrese Id credencial"
+                                        />
+                                        {
+                                        (ErrorIdCredencial===1) && (
+                                            <label>
+                                                El formato de Id no es valido
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorIdCredencial===2) && (
+                                            <label>
+                                                El numero minimo es de 4 caracteres.
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorIdCredencial===3) && (
+                                            <label>
+                                                El numero maximo es de 40 caracteres.
+                                            </label>
+                                        )
+                                        }
                             </Grid>
                             <Grid item xs={12} md={2}></Grid>
 
@@ -69,7 +213,39 @@ const PlandeUsuario = () => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                                <TextField name="PlanDeIdentificacion" value={usuario.Id} onChange={IngresarValoresMemoria} variant="outlined" fullWidth label="Plan de identificacion"/>
+                                <TextField 
+                                        id="PlanDeIdentificacion"
+                                        name="PlanDeIdentificacion" 
+                                        type="text"
+                                        error={ErrorPlanDeIdentificacion}
+                                        value={usuario.PlanDeIdentificacion} 
+                                        onChange={ValidatePlanDeIdentificacion} 
+                                        variant="outlined" 
+                                        requared
+                                        fullWidth 
+                                        label="Ingrese identificacion"
+                                        />
+                                        {
+                                        (ErrorPlanDeIdentificacion===1) && (
+                                            <label>
+                                                El formato ingresado no es valido
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorPlanDeIdentificacion===2) && (
+                                            <label>
+                                                El numero minimo es de 4 caracteres.
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorPlanDeIdentificacion===3) && (
+                                            <label>
+                                                El numero maximo es de 40 caracteres.
+                                            </label>
+                                        )
+                                        }
                             </Grid>
                             <Grid item xs={12} md={2}></Grid>
 
@@ -80,7 +256,39 @@ const PlandeUsuario = () => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                                <TextField name="Eliminar" value={usuario.Id} onChange={IngresarValoresMemoria} variant="outlined" fullWidth label="Eliminar"/>
+                                <TextField
+                                        id="Eliminar"
+                                        name="Eliminar" 
+                                        type="text"
+                                        error={ErrorEliminar}
+                                        value={usuario.Eliminar} 
+                                        onChange={ValidateEliminar} 
+                                        variant="outlined" 
+                                        requared
+                                        fullWidth 
+                                        label="Ingrese valor a eliminar"
+                                        />
+                                        {
+                                        (ErrorEliminar===1) && (
+                                            <label>
+                                                El formato ingresado no es valido
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorEliminar===2) && (
+                                            <label>
+                                                El numero minimo es de 4 caracteres.
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorEliminar===3) && (
+                                            <label>
+                                                El numero maximo es de 40 caracteres.
+                                            </label>
+                                        )
+                                        }
                             </Grid>
                             <Grid item xs={12} md={2}></Grid>
                         
@@ -91,7 +299,39 @@ const PlandeUsuario = () => {
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                                <TextField name="FinDeFecha" value={usuario.Id} onChange={IngresarValoresMemoria} variant="outlined" fullWidth label="Ingrese fin de fecha"/>
+                                <TextField 
+                                        id="FinDeFecha"
+                                        name="FinDeFecha" 
+                                        type="text"
+                                        error={ErrorFinDeFecha}
+                                        value={usuario.FinDeFecha} 
+                                        onChange={ValidateFinDeFecha} 
+                                        variant="outlined" 
+                                        requared
+                                        fullWidth 
+                                        label="Ingrese fin de fecha"
+                                        />
+                                        {
+                                        (ErrorFinDeFecha===1) && (
+                                            <label>
+                                                El formato ingresado no es valido
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorFinDeFecha===2) && (
+                                            <label>
+                                                El numero minimo es de 4 caracteres.
+                                            </label>
+                                        )
+                                        }
+                                        {
+                                        (ErrorFinDeFecha===3) && (
+                                            <label>
+                                                El numero maximo es de 40 caracteres.
+                                            </label>
+                                        )
+                                        }
                             </Grid>
                             <Grid item xs={12} md={2}></Grid>
 
